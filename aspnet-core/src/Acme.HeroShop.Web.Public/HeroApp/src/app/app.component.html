@@ -1,0 +1,132 @@
+<header>
+  <div class="navbar navbar-dark bg-dark box-shadow">
+    <div class="container d-flex justify-content-between">
+      <a href="#" class="navbar-brand d-flex align-items-center">
+        <strong>MusicShop</strong>
+      </a>
+    </div>
+  </div>
+</header>
+
+<div *ngIf="accountExist" class="album py-5 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4">
+        <form *ngIf="!userExist" #registrationForm="ngForm" (ngSubmit)="registration(registrationForm)">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter Email" ngModel
+              required>
+          </div>
+          <div class="form-group">
+            <label for="name">User Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter User Name" ngModel required>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Password" ngModel required>
+          </div>
+          <button type="button" class="btn btn-secondary" (click)="changeForm()">Back to Login</button>
+          <button type="submit" class="btn btn-success float-right">Registration</button>
+        </form>
+        <form *ngIf="userExist" #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+          <div class="form-group">
+            <label for="login">Login</label>
+            <input type="text" class="form-control" id="name" name="name" ngModel required placeholder="Enter Login">
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password" ngModel required placeholder="Password">
+          </div>
+          <button type="submit" class="btn btn-success">Login</button>
+        </form>
+      </div>
+      <div *ngIf="userExist" class="col-lg-12">
+        <p>Have you got any account? Click
+          <a href="javascript:void(0);" (click)="changeForm()">here</a>.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="musicListExist">
+  <div class="album py-5 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <ul class="list-group">
+            <li class="list-group-item">
+              <a href="#" (click)="filterMusic(null)">All</a>
+            </li>
+            <li class="list-group-item" *ngFor="let musicAuthor of musicAuthorList">
+              <a href="#" (click)="filterMusic(musicAuthor)">{{musicAuthor}}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-9">
+          <div class="row">
+            <div class="col-md-12">
+              <h3 class="mb-3">{{selectedAuthor}} Authors</h3>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4" *ngFor="let music of displayMusicList">
+              <div class="card mb-4 box-shadow">
+                <img class="card-img-top" style="height: 225px; width: 100%; display: block;" [src]='music.image'>
+                <div class="card-body">
+                  <p class="card-text">{{music.name}}</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" (click)="detailsMusic(music)" class="btn btn-sm btn-outline-secondary">Details</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div *ngIf="musicDetailsExist">
+
+  <div class="album py-5 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="btn-group">
+              <button type="button" (click)="detailsMusic(music)" class="btn btn-sm btn-outline-secondary">Back</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-9">
+          <div class="row">
+            <div class="col-md-12">
+              <h3 class="mb-3">{{detailsProduct.name}} </h3>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="card mb-4 box-shadow">
+                <img class="card-img-top" style="height: 225px; width: 100%; display: block;" [src]='detailsProduct.image'>
+
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card mb-4 box-shadow">
+                <div class="card-body">
+                  <p class="card-text">Author: {{detailsProduct.author}}</p>
+                  <p class="card-text">Price$: {{detailsProduct.price}}</p>
+                  <p class="card-text">Duration: {{detailsProduct.duration}}min</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
